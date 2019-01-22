@@ -46,7 +46,7 @@ int CBaseSocket::bindAndListen(sockaddr* serv_addr,int size)
 {
 	_SetReuseAddr(m_socket);
 	_SetNonblock(m_socket);
-    int ret = ::bind(m_socket, (sockaddr*)&serv_addr, size);
+    int ret = ::bind(m_socket, serv_addr, size);
 	if (ret == SOCKET_ERROR)
 	{
 		log("bind failed, err_code=%d", _GetErrorCode());
