@@ -166,7 +166,7 @@ net_handle_t CBaseSocket::UnixConnect(const char* unix_socket_path,callback_t ca
 		return NETLIB_INVALID_HANDLE;
 	}
     _SetNonblock(m_socket);
-	_SetNoDelay(m_socket);	
+	//_SetNoDelay(m_socket);	
 	struct sockaddr_un addr;
 	memset(&addr, 0, sizeof(struct sockaddr_un));
 	addr.sun_family = AF_UNIX;
