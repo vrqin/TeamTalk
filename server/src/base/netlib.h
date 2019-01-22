@@ -34,6 +34,17 @@ int netlib_ssl_listen(
         callback_t  callback,
         void*       callback_data);
 
+int netlib_unix_listen(
+	    char * unix_socket_path,
+		callback_t  callback,
+        void*       callback_data);
+
+int netlib_unix_connect(
+	    char * unix_socket_path,
+		callback_t  callback,
+        void*       callback_data);
+
+
 
 net_handle_t netlib_connect(
 		const char*	server_ip,
