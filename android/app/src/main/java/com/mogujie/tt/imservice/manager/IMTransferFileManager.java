@@ -110,7 +110,7 @@ public class IMTransferFileManager  extends IMManager{
     }
 
 
-    public void sendFileToUser(final File file, final int fromUser, final int toId) {
+    public void sendOfflineFileToUser(final File file, final int fromUser, final int toId, final TransferFileTask.TransferCallBack callback) {
         IMFile.IMFileReq req = IMFile.IMFileReq.newBuilder()
                 .setFileName(file.getName()).setFileSize((int) file.length()).setFromUserId(fromUser).setTransMode(IMBaseDefine.TransferFileType.FILE_TYPE_OFFLINE).setToUserId(toId).build();
         int sid = IMBaseDefine.ServiceID.SID_FILE_VALUE;
@@ -125,6 +125,9 @@ public class IMTransferFileManager  extends IMManager{
                         IMBaseDefine.IpAddr addr =  rsp.getIpAddrList(0);
                         TransferFileTask task = new TransferFileTask(fromUser,toId,rsp.getTaskId(),addr.getIp(),addr.getPort(),transMode,true);
                         try {
+                            if(callback != null) {
+                                task.setCallBack(callback);
+                            }
                             task.setTargetFile(file);
                             task.startWork();
                         } catch (Exception e) {

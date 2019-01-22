@@ -69,9 +69,12 @@ import com.mogujie.tt.imservice.entity.UnreadEntity;
 import com.mogujie.tt.imservice.event.MessageEvent;
 import com.mogujie.tt.imservice.event.PriorityEvent;
 import com.mogujie.tt.imservice.event.SelectEvent;
+import com.mogujie.tt.imservice.event.TransferFileEvent;
 import com.mogujie.tt.imservice.manager.IMLoginManager;
+import com.mogujie.tt.imservice.manager.IMMessageManager;
 import com.mogujie.tt.imservice.manager.IMStackManager;
 import com.mogujie.tt.imservice.manager.IMTransferFileManager;
+import com.mogujie.tt.imservice.network.TransferFileTask;
 import com.mogujie.tt.imservice.service.IMService;
 import com.mogujie.tt.imservice.support.IMServiceConnector;
 import com.mogujie.tt.ui.adapter.MessageAdapter;
@@ -376,8 +379,38 @@ public class MessageActivity extends TTBaseActivity
                 Uri uri = data.getData();
                 try {
                     String path = PathUtil.getPath(getBaseContext(),uri);
-                    File file = new File(path);
-                    IMTransferFileManager.instance().sendFileToUser(file,loginUser.getPeerId(),peerEntity.getPeerId());
+                    final File file = new File(path);
+                    IMTransferFileManager.instance().sendOfflineFileToUser(file, loginUser.getPeerId(), peerEntity.getPeerId(), new TransferFileTask.TransferCallBack() {
+                        @Override
+                        public void onStart(TransferFileTask task) {
+
+                        }
+
+                        @Override
+                        public void onProgressing(TransferFileTask task, float progress) {
+
+                        }
+
+                        @Override
+                        public void onFinished(TransferFileTask task) {
+
+                            uiHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TextMessage textMessage = TextMessage.buildForSend("[file:"+ file.getName() +" ]", loginUser, peerEntity);
+                                    IMMessageManager.instance().sendText(textMessage);
+                                    pushList(textMessage);
+                                    scrollToBottomListItem();
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCanceled(TransferFileTask task, String msg) {
+
+                        }
+                    });
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -434,6 +467,10 @@ public class MessageActivity extends TTBaseActivity
         }
     }
 
+    public void onEvent(TransferFileEvent event){
+
+    }
+
     public void onEventMainThread(MessageEvent event) {
         MessageEvent.Event type = event.getEvent();
         MessageEntity entity = event.getMessageEntity();
@@ -472,7 +509,9 @@ public class MessageActivity extends TTBaseActivity
                 }
             }
             break;
+
         }
+
     }
 
     /**
