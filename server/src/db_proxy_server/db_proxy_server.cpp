@@ -104,6 +104,8 @@ puts("db init success");
 	char* str_thread_num = config_file.GetConfigName("ThreadNum");
     char* str_file_site = config_file.GetConfigName("MsfsSite");
     char* str_aes_key = config_file.GetConfigName("aesKey");
+    char* unix_socket_path = config_file.GetConfigName("UnixSocket");
+
 
 	if (!listen_ip || !str_listen_port || !str_thread_num || !str_file_site || !str_aes_key) {
 		log("missing ListenIP/ListenPort/ThreadNum/MsfsSite/aesKey, exit...");
@@ -153,6 +155,10 @@ puts("db init success");
 		if (ret == NETLIB_ERROR)
 			return ret;
 	}
+    if(unix_socket_path)
+    {
+        netlib_unix_listen(unix_socket_path,proxy_serv_callback,NULL);
+    }
 
 	printf("server start listen on: %s:%d\n", listen_ip,  listen_port);
 	printf("now enter the event loop...\n");

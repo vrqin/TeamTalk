@@ -8,6 +8,7 @@
 #include "ostype.h"
 #include "util.h"
 
+
 enum
 {
 	SOCKET_STATE_IDLE,
@@ -35,7 +36,6 @@ public:
 	void SetRemotePort(uint16_t port) { m_remote_port = port; }
 	void SetSendBufSize(uint32_t send_size);
 	void SetRecvBufSize(uint32_t recv_size);
-
 	const char*	GetRemoteIP() { return m_remote_ip.c_str(); }
 	uint16_t	GetRemotePort() { return m_remote_port; }
 	const char*	GetLocalIP() { return m_local_ip.c_str(); }
@@ -47,17 +47,34 @@ public:
 		callback_t		callback,
 		void*			callback_data);
 
+	
+
 	net_handle_t Connect(
 		const char*		server_ip, 
 		uint16_t		port,
 		callback_t		callback,
 		void*			callback_data);
+
+
+	int UnixListen(
+		const char* unix_socket_path,
+	    callback_t		callback,
+		void*			callback_data);
+
+	net_handle_t UnixConnect(
+		const char* unix_socket_path,
+	    callback_t		callback,
+		void*			callback_data);
+
+	
 	int Close();
 	
 	virtual int Send(void* buf, int len);
 	virtual int Recv(void* buf, int len);
 	virtual void _AcceptNewSocket();
 	
+private:
+	int bindAndListen(sockaddr* serv_addr);
 	
 public:	
 	void OnRead();

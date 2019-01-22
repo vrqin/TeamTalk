@@ -80,6 +80,42 @@ net_handle_t netlib_connect(
 	return handle;
 }
 
+int netlib_unix_listen(
+	    char * unix_socket_path,
+		callback_t  callback,
+        void*       callback_data)
+{
+	CBaseSocket* pSocket = new CBaseSocket();
+	if (!pSocket)
+		return NETLIB_ERROR;
+
+	int ret =  pSocket->UnixListen(unix_socket_path, callback, callback_data);
+	if (ret == NETLIB_ERROR)
+		delete pSocket;
+	return ret;
+
+
+}
+
+int netlib_unix_connect(
+	    char * unix_socket_path,
+		callback_t  callback,
+        void*       callback_data)
+{
+    CBaseSocket* pSocket = new CBaseSocket();
+	if (!pSocket)
+		return NETLIB_INVALID_HANDLE;
+
+	net_handle_t handle = pSocket->UnixConnect(unix_socket_path, callback, callback_data);
+	if (handle == NETLIB_INVALID_HANDLE)
+		delete pSocket;
+	return handle;
+
+}
+
+
+
+
 int netlib_send(net_handle_t handle, void* buf, int len)
 {
 	CBaseSocket* pSocket = FindBaseSocket(handle);
@@ -97,7 +133,6 @@ int netlib_recv(net_handle_t handle, void* buf, int len)
 	CBaseSocket* pSocket = FindBaseSocket(handle);
 	if (!pSocket)
 		return NETLIB_ERROR;
-
 	int ret = pSocket->Recv(buf, len);
 	pSocket->ReleaseRef();
 	return ret;
