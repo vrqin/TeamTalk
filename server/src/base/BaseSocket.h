@@ -74,7 +74,7 @@ public:
 	virtual void _AcceptNewSocket();
 	
 private:
-	int bindAndListen(sockaddr* serv_addr);
+	int bindAndListen(sockaddr* serv_addr, int size);
 	
 public:	
 	void OnRead();

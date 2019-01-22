@@ -42,11 +42,11 @@ CBaseSocket::~CBaseSocket()
 }
 
 
-int CBaseSocket::bindAndListen(sockaddr* serv_addr)
+int CBaseSocket::bindAndListen(sockaddr* serv_addr,int size)
 {
 	_SetReuseAddr(m_socket);
 	_SetNonblock(m_socket);
-    int ret = ::bind(m_socket, (sockaddr*)&serv_addr, sizeof(serv_addr));
+    int ret = ::bind(m_socket, (sockaddr*)&serv_addr, size);
 	if (ret == SOCKET_ERROR)
 	{
 		log("bind failed, err_code=%d", _GetErrorCode());
@@ -87,7 +87,7 @@ int CBaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callbac
 
 	sockaddr_in serv_addr;
 	_SetAddr(server_ip, port, &serv_addr);
-	int ret = bindAndListen((sockaddr*)&serv_addr);
+	int ret = bindAndListen((sockaddr*)&serv_addr,sizeof(serv_addr));
 	if(ret == NETLIB_OK){
 	   log("CBaseSocket::Listen on %s:%d", server_ip, port); 
 	}
@@ -96,7 +96,7 @@ int CBaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callbac
 
 net_handle_t CBaseSocket::Connect(const char* server_ip, uint16_t port, callback_t callback, void* callback_data)
 {
-	log("CBaseSocket::Connect, server_ip=%s, port=%d", server_ip, port);
+    log("CBaseSocket::Connect, server_ip=%s, port=%d", server_ip, port);
 
 	m_remote_ip = server_ip;
 	m_remote_port = port;
@@ -148,7 +148,7 @@ int CBaseSocket::UnixListen(const char* unix_socket_path,callback_t	callback,voi
 	memset(&addr, 0, sizeof(struct sockaddr_un));
 	addr.sun_family = AF_UNIX;
 	strncpy(addr.sun_path, unix_socket_path, sizeof(addr.sun_path) - 1);
-   	int ret = bindAndListen((sockaddr*)&addr);
+   	int ret = bindAndListen((sockaddr*)&addr,sizeof(addr));
 	if(ret == NETLIB_OK){
 	   log("CBaseSocket::Listen on %s", unix_socket_path); 
 	}
