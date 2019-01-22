@@ -11,7 +11,18 @@ out_path=$base_path/$im_server
 
 rm -rf $base_src_path/base/pb/protocol/*
 
-protoc -I=$base_path/../pb --cpp_out=$base_src_path/base/pb/protocol/ $base_path/../pb/*.proto
+if [ ! -f ../server/src/protobuf/bin/protoc  ];then
+
+cd ../server/src/
+./make_protobuf.sh
+./make_hiredis.sh
+./make_log4cxx.sh
+cd ../../docker/
+
+fi
+
+
+../server/src/protobuf/bin/protoc -I=$base_path/../pb --cpp_out=$base_src_path/base/pb/protocol/ $base_path/../pb/*.proto
 
 cd $base_src_path
 
