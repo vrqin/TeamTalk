@@ -34,7 +34,19 @@
 
 [http://im.xiaominfc.com:8080/msg_server](http://im.xiaominfc.com:8080/msg_server)
 
+## 测试账号 密码
+~~~~
+xiaoyang 123456
+test  123456
+~~~~
 
 # 在线demo
 
 [http://chat.xiaominfc.com/im/](http://chat.xiaominfc.com/im/)
+
+
+# 估值一个亿的ai代码测试:
+![ai代码测试](https://raw.githubusercontent.com/xiaominfc/TeamTalk/master/android_test_ai.png)
+
+
+
