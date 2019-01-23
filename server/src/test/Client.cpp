@@ -252,6 +252,13 @@ void CClient::onRecvMsg(uint32_t nSeqNo, uint32_t nFromId, uint32_t nToId, uint3
     if (pAes->Decrypt(strMsgData.c_str(), strMsgData.length(), &msg_out, msg_out_len) == 0)
     {
         string msg_data = string(msg_out, msg_out_len);
+
+        
+        msg_data.replace(msg_data.find("吗"),strlen("吗"),"");
+        msg_data.replace(msg_data.find("?"),strlen("?"),"!");
+        msg_data.replace(msg_data.find("？"),strlen("？"),"!");
+
+
         printf("onRecvMsg  content:%s\n",msg_data.c_str());
 
         uint32_t toId = nFromId;
