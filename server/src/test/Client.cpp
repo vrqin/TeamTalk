@@ -244,6 +244,17 @@ void CClient::onGetMsgList(uint32_t nSeqNo, uint32_t nUserId, uint32_t nPeerId, 
     
 }
 
+
+bool str_replace(std::string& str, const std::string& from, const std::string& to) {
+    size_t start_pos = str.find(from);
+    if(start_pos == std::string::npos)
+        return false;
+    str.replace(start_pos, from.length(), to);
+    return true;
+}
+
+
+
 void CClient::onRecvMsg(uint32_t nSeqNo, uint32_t nFromId, uint32_t nToId, uint32_t nMsgId, uint32_t nCreateTime, IM::BaseDefine::MsgType nMsgType, const string &strMsgData)
 {
     printf("onRecvMsg  from:%d\n",nFromId);
@@ -252,15 +263,10 @@ void CClient::onRecvMsg(uint32_t nSeqNo, uint32_t nFromId, uint32_t nToId, uint3
     if (pAes->Decrypt(strMsgData.c_str(), strMsgData.length(), &msg_out, msg_out_len) == 0)
     {
         string msg_data = string(msg_out, msg_out_len);
-
-        
-        msg_data.replace(msg_data.find("吗"),strlen("吗"),"");
-        msg_data.replace(msg_data.find("?"),strlen("?"),"!");
-        msg_data.replace(msg_data.find("？"),strlen("？"),"!");
-
-
+        str_replace(mag_data,"吗","");
+        str_replace(mag_data,"?","!");
+        str_replace(mag_data,"？","!");
         printf("onRecvMsg  content:%s\n",msg_data.c_str());
-
         uint32_t toId = nFromId;
 
         if(nMsgType == IM::BaseDefine::MSG_TYPE_GROUP_TEXT || nMsgType == IM::BaseDefine::MSG_TYPE_GROUP_AUDIO ) {
