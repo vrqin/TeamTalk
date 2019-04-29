@@ -29,6 +29,10 @@
 
 
 
+# dart 客户端api的实现
+
+[https://github.com/xiaominfc/teamtalk_dart_lib](https://github.com/xiaominfc/teamtalk_dart_lib)
+
 
 # 测试的msg_server
 
