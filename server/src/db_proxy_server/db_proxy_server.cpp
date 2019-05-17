@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 		log("DBManager init failed");
 		return -1;
 	}
-puts("db init success");
+    puts("db init success");
 	// 主线程初始化单例，不然在工作线程可能会出现多次初始化
 	if (!CAudioModel::getInstance()) {
 		return -1;
@@ -97,7 +97,14 @@ puts("db init success");
     }
 
 
-	CConfigFileReader config_file("dbproxyserver.conf");
+	
+	char *configName = "dbproxyserver.conf";
+
+	if(argc == 3 && (strcmp(argv[1], "-c") == 0)) {
+		configName = argv[2];
+	}
+
+	CConfigFileReader config_file(configName);
 
 	char* listen_ip = config_file.GetConfigName("ListenIP");
 	char* str_listen_port = config_file.GetConfigName("ListenPort");
