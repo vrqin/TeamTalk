@@ -34,6 +34,9 @@
 [https://github.com/xiaominfc/teamtalk_dart_lib](https://github.com/xiaominfc/teamtalk_dart_lib)
 
 
+# flutter 实现
+[https://github.com/xiaominfc/flutter_tt](https://github.com/xiaominfc/flutter_tt)
+
 # 测试的msg_server
 
 [http://im.xiaominfc.com:8080/msg_server](http://im.xiaominfc.com:8080/msg_server)
