@@ -47,7 +47,7 @@ xiaoyang 123456
 test  123456
 ~~~~
 
-# 在线demo
+# 在线demo(服务器被封IP了 要翻墙才能访问)
 
 [http://chat.xiaominfc.com/im/](http://chat.xiaominfc.com/im/)
 
