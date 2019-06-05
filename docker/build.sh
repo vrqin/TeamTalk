@@ -25,7 +25,7 @@ fi
 #protoc -I=$base_path/../pb --cpp_out=$base_src_path/base/pb/protocol/ $base_path/../pb/*.proto
 
 cd $base_src_path
-find . -name "CMakeCache.txt" -exec rm -rf {} \;
+#find . -name "CMakeCache.txt" -exec rm -rf {} \;
 
 
 for sub_src_path in ${srcpaths[@]}
