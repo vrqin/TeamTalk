@@ -21,11 +21,10 @@ cd ../../docker/
 
 fi
 
-
 ../server/src/protobuf/bin/protoc -I=$base_path/../pb --cpp_out=$base_src_path/base/pb/protocol/ $base_path/../pb/*.proto
+#protoc -I=$base_path/../pb --cpp_out=$base_src_path/base/pb/protocol/ $base_path/../pb/*.proto
 
 cd $base_src_path
-
 find . -name "CMakeCache.txt" -exec rm -rf {} \;
 
 
@@ -40,6 +39,7 @@ done
 
 mkdir -p $out_path/lib
 cp $base_src_path/slog/libslog.* $out_path/lib/
+cp $base_src_path/slog/liblog4cxx.* $out_path/lib/
 
 delete=(slog base)
 
@@ -50,7 +50,7 @@ done
 
 for server in ${srcpaths[@]}
 do
-    mkdir -p $build_path/$server
+    mkdir -p $out_path/$server
     cp -f $base_src_path/$server/$server $out_path/$server/$server
     cp -f $base_src_path/$server/*.conf $out_path/$server/
     cp -f $base_src_path/slog/log4cxx.properties $out_path/$server/

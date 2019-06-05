@@ -20,6 +20,6 @@ if [ "$image" == ""  ];then
 fi
 
 
-docker run -d  --privileged=true -v "$project_path:/opt/tt_source_code" -v "/Users/xiaominfc/Develop_mac/data/mysql:/var/lib/mysql"  -p 8080:8080/tcp  $docker_image_name
+docker run -d  --privileged=true -v "$project_path/docker/im_server:/opt/im_server" -v "/Users/xiaominfc/Develop_mac/data/mysql:/var/lib/mysql"  -p 8080:8080/tcp  $docker_image_name
 docker exec -it $(docker ps -q) /bin/bash
 
