@@ -19,7 +19,10 @@ if [ "$image" == ""  ];then
     docker build --rm -t $docker_image_name -f $docker_file . 
 fi
 
+mkdir mysql_data
 
-docker run -d  --privileged=true -v "$project_path/docker/im_server:/opt/im_server" -v "/Users/xiaominfc/Develop_mac/data/mysql:/var/lib/mysql"  -p 8080:8080/tcp  $docker_image_name
+$mysql_data_dir=$(pwd)/mysql_data
+
+docker run -d  --privileged=true -v "$project_path/docker/im_server:/opt/im_server" -v "$mysql_data_dir:/var/lib/mysql"   -p 13306:3306/tcp -p 18080:8080/tcp -p 18400:8400/tcp -p 18200:8200/tcp -p 18000:8000/tcp  $docker_image_name
 docker exec -it $(docker ps -q) /bin/bash
 
