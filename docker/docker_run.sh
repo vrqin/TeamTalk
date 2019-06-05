@@ -20,12 +20,13 @@ if [ "$image" == ""  ];then
 fi
 
 if [ ! -d mysql_data ];then
-mkdir -p ./mysql_data
+    mkdir -p ./mysql_data
 fi
+chmod 777 ./mysql_data
 
 mysql_data_dir=$(pwd)/mysql_data
 supervisor_confs_dir=$(pwd)/supervisor_confs
 
-docker run -d  --privileged=true -v "$project_path/docker/im_server:/opt/im_server" -v "$mysql_data_dir:/var/lib/mysql"  -v "$supervisor_confs_dir:/etc/supervisord.d"    -p 13306:3306/tcp -p 18080:8080/tcp -p 18400:8400/tcp -p 18200:8200/tcp -p 18000:8000/tcp  $docker_image_name
+docker run -d  --privileged=true -v "$project_path/docker/im_server:/opt/im_server" -v "$mysql_data_dir:/var/lib/mysql"  -v "$supervisor_confs_dir:/etc/supervisord.d"    -p 13306:3306/tcp -p 18080:8080/tcp -p 18400:8400/tcp -p 18200:8200/tcp -p 18700:8700/tcp -p 18000:8000/tcp  $docker_image_name
 docker exec -it $(docker ps -q) /bin/bash
 
