@@ -19,7 +19,9 @@ if [ "$image" == ""  ];then
     docker build --rm -t $docker_image_name -f $docker_file . 
 fi
 
-mkdir ./mysql_data
+if [ ! -d mysql_data ];then
+mkdir -p ./mysql_data
+fi
 
 $mysql_data_dir=$(pwd)/mysql_data
 
