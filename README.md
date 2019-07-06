@@ -47,9 +47,9 @@ xiaoyang 123456
 test  123456
 ~~~~
 
-# 在线demo(服务器被封IP了 要翻墙才能访问)
+# 在线demo
 
-[http://chat.xiaominfc.com/im/](http://chat.xiaominfc.com/im/)
+[http://im.xiaominfc.com/](http://im.xiaominfc.com/)
 
 
 # 估值一个亿的ai代码测试:
