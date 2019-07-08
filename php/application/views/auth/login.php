@@ -20,7 +20,7 @@
             $(function(){
                 $("form").submit(function(){                
                     $.post('/auth/login', {
-                        admin    : $(".admin").val(),
+                        account  : $(".admin").val(),
                         password : $(".password").val(),
                         submit   : 1
                     }, function(data) {

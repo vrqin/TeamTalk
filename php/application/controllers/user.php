@@ -71,6 +71,10 @@ class User extends TT_Controller {
 	public function add()
 	{
 		$salt = rand()%10000;
+		$avatar = $this->input->post('avatar');
+		if(strpos($avatar, $this->config->config['msfs_url']) === false){
+			$avatar = $this->config->config['msfs_url'].$this->input->post('avatar');
+		}
 		$params = array(
 			'sex'=>$this->input->post('sex'),
 			'name'=>$this->input->post('name'),
@@ -80,9 +84,9 @@ class User extends TT_Controller {
 			'salt'=>$salt,
 			'phone'=>$this->input->post('phone'),
 			'email'=>$this->input->post('email'),
-			'avatar'=>$this->input->post('avatar'),
+			'avatar'=>$avatar,
 			'departId'=>$this->input->post('departId'),
-			'status'=>$this->input->post('status'),
+			'status'=>0,
 			'created'=>time(),
 			'updated'=>time()
 		);
@@ -107,7 +111,7 @@ class User extends TT_Controller {
 			'email'=>$this->input->post('email'),
 			'avatar'=>$avatar,
 			'departId'=>$this->input->post('departId'),
-			'status'=>$this->input->post('status'),
+			'status'=>0,
 			'updated'=>time()
 		);
 		$id = $this->input->post('id');
