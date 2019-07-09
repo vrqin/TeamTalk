@@ -71,7 +71,7 @@
                         </li>
                         <li>
                             <a href="/discovery">
-                                <span>系统设置</span>
+                                <span>发现管理</span>
                             </a>
                         </li>
                     </ul>
