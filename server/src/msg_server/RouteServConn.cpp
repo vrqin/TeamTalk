@@ -246,12 +246,12 @@ void CRouteServConn::HandlePdu(CImPdu* pPdu)
             break;
         case CID_BUDDY_LIST_SIGN_INFO_CHANGED_NOTIFY:
             _HandleSignInfoChangedNotify(pPdu);
+            break;
         case CID_GROUP_CHANGE_MEMBER_NOTIFY:
             s_group_chat->HandleGroupChangeMemberBroadcast(pPdu);
             break;
         case CID_FILE_NOTIFY:
             s_file_handler->HandleFileNotify(pPdu);
-            break;
             break;
         default:
             log("unknown cmd id=%d ", pPdu->GetCommandId());
