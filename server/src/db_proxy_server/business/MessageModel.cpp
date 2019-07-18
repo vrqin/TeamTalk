@@ -281,7 +281,8 @@ uint32_t CMessageModel::getMsgId(uint32_t nRelateId)
             uint32_t newMsgId = getMsgIdFromDb(nRelateId);
             if(newMsgId > nMsgId) {
                 nMsgId = newMsgId + 1;
-                pCacheConn->set(strKey,int2string(nMsgId));
+                string value = int2string(nMsgId);
+                pCacheConn->set(strKey,value);
             }
         }
         pCacheManager->RelCacheConn(pCacheConn);
