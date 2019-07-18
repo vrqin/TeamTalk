@@ -44,12 +44,14 @@ public:
                            list<uint32_t>& lsCurUserId);
     void getGroupUser(uint32_t nGroupId, list<uint32_t>& lsUserId);
     bool isInGroup(uint32_t nUserId, uint32_t nGroupId);
+    
     void updateGroupChat(uint32_t nGroupId);
     bool isValidateGroupId(uint32_t nGroupId);
+    
     uint32_t getUserJoinTime(uint32_t nGroupId, uint32_t nUserId);
 private:
     CGroupModel();
-    
+    bool isValidateGroupIdByDB(uint32_t nGroupId);
     bool insertNewGroup(uint32_t reqUserId, const string& groupName, const string& groupAvatar, uint32_t groupType, uint32_t memCnt, uint32_t& groupId);
     bool insertNewMember(uint32_t nGroupId,set<uint32_t>& setUsers);
         string GenerateGroupAvatar(uint32_t groupId);
