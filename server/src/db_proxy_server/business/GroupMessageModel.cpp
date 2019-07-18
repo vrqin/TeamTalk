@@ -441,7 +441,7 @@ uint32_t CGroupMessageModel::getMsgId(uint32_t nGroupId)
         nMsgId = pCacheConn->incrBy(strKey, 1);
         pCacheManager->RelCacheConn(pCacheConn);
         if(nMsgId == 1) {
-            uint32_t newMsgId = getMsgIdFromDb(nRelateId);
+            uint32_t newMsgId = getMsgIdFromDb(nGroupId);
             if(newMsgId > nMsgId) {
                 nMsgId = newMsgId + 1;
                 string value = int2string(nMsgId);
