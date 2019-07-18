@@ -43,6 +43,30 @@ CMessageModel* CMessageModel::getInstance()
 	return m_pInstance;
 }
 
+
+uint32_t CMessageModel::getMsgIdFromDb(uint32_t nRelateId){
+    int maxMsgId = 0;
+    if (nRelateId != INVALID_VALUE){
+        CDBManager* pDBManager = CDBManager::getInstance();
+        CDBConn* pDBConn = pDBManager->GetDBConn("teamtalk_slave");
+        if (pDBConn)
+        {
+            string strTableName = "IMMessage_" + int2string(nRelateId % 8);
+            string strSql = "select max(msgId) from " + strTableName +  " where relateId="  + int2string(nRelateId);
+            CResultSet* pResultSet = pDBConn->ExecuteQuery(strSql.c_str());
+            if (pResultSet)
+            {
+                if(pResultSet->Next()){
+                    maxMsgId =  pResultSet->GetInt("max(msgId)");
+                }
+                delete pResultSet;
+            }
+            pDBManager->RelDBConn(pDBConn);
+        }
+    }
+    return maxMsgId;
+}
+
 void CMessageModel::getMessage(uint32_t nUserId, uint32_t nPeerId, uint32_t nMsgId,
                                uint32_t nMsgCnt, list<IM::BaseDefine::MsgInfo>& lsMsg)
 {
@@ -253,7 +277,15 @@ uint32_t CMessageModel::getMsgId(uint32_t nRelateId)
     {
         string strKey = "msg_id_" + int2string(nRelateId);
         nMsgId = pCacheConn->incrBy(strKey, 1);
+        if(nMsgId == 1) {
+            uint32_t newMsgId = getMsgIdFromDb(nRelateId);
+            if(newMsgId > nMsgId) {
+                nMsgId = newMsgId + 1;
+                pCacheConn->set(strKey,int2string(nMsgId));
+            }
+        }
         pCacheManager->RelCacheConn(pCacheConn);
+        
     }
     return nMsgId;
 }

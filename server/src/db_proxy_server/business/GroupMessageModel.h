@@ -43,6 +43,7 @@ public:
 private:
     CGroupMessageModel();
     bool incMessageCount(uint32_t nUserId, uint32_t nGroupId);
+    uint32_t getMsgIdFromDb(uint32_t nRelateId);
 
 private:
 	static CGroupMessageModel*	m_pInstance;
