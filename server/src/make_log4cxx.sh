@@ -78,8 +78,10 @@ get_cur_dir() {
 }
 
 build_log4cxx(){
-    yum -y install apr-devel
-    yum -y install apr-util-devel
+    #yum -y install apr-devel
+    #yum -y install apr-util-devel
+    sudo apt install libapr1-dev
+    sudo apt install libapr1util-dev
     cd log4cxx
     download $LOG4CXX.tar.gz $LOG4CXX_PATH
     tar -xf $LOG4CXX.tar.gz

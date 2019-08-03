@@ -12,7 +12,7 @@ build() {
     apt-get -y install libcurl4-openssl-dev
 #    apt-get -y install openssl-devel
     apt-get -y  install libcurl-dev 
-    apt-get -y  install liblog4cxx10-dev libprotobuf-lite8 libhiredis-dev protobuf-compiler cmake g++  libprotobuf-dev
+    #apt-get -y  install liblog4cxx10-dev libprotobuf-lite8 libhiredis-dev protobuf-compiler cmake g++  libprotobuf-dev
 
 	echo "#ifndef __VERSION_H__" > base/version.h
 	echo "#define __VERSION_H__" >> base/version.h

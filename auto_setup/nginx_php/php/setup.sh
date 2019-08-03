@@ -5,6 +5,8 @@
 
 # setup php
 
+#http://cn2.php.net/distributions/php-5.6.6.tar.gz
+
 PHP=php-5.6.6
 PHP_DOWNLOAD_PATH=http://cn2.php.net/distributions/$PHP.tar.gz
 INSTALL_DIR=/usr/local/php5
@@ -54,13 +56,13 @@ check_run() {
 
 
 clean_yum() {
-	YUM_PID=/var/run/yum.pid
-	if [ -f "$YUM_PID" ]; then
-		set -x
-		rm -f YUM_PID
-		killall yum
-		set +x
-	fi
+	YUM_PID=/var/run/apt.pid
+	# if [ -f "$YUM_PID" ]; then
+	# 	set -x
+	# 	rm -f YUM_PID
+	# 	killall yum
+	# 	set +x
+	# fi
 }
 
 
@@ -114,8 +116,8 @@ build_php() {
 	else
 	  echo "Error: install php failed";
 	  return 1;
-	fi
-	cd ..
+																																																					fi
+																																																					cd ..
 	return 0
 }
 
@@ -293,24 +295,34 @@ print_help() {
 	echo "  $0 install --- check & run scripts to install"
 }
 
-case $1 in
-	check)
-		print_hello $1
-		check_user
-		check_os
-		check_run
-		;;
-	install)
-		print_hello	$1
-		check_user
-		check_os
-		check_run
-		build_all
-		;;
-	*)
-		print_help
-		;;
-esac
 
+# case $1 in
+# 	check)
+# 		print_hello $1
+# 		check_user
+# 		check_os
+# 		check_run
+# 		;;
+# 	install)
+# 		print_hello	$1
+# 		check_user
+# 		check_os
+# 		check_run
+# 		build_all
+# 		;;
+# 	*)
+# 		print_help
+# 		;;
+# esac
+
+#sudo apt install libjpeg-dev libpng-dev php-gd libxml2-dev
+
+mkdir -p $INSTALL_DIR
+
+build_php
+if [ $? -eq 1 ]; then
+	exit 1
+fi  
+modify_php
 
 

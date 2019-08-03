@@ -3,6 +3,8 @@
 # author: luoning
 # date: 09/04/2014
 
+/var/www/html/tt/application/config
+
 # setup web
 PHP_WEB=tt
 PHP_WEB_SETUP_PATH=/var/www/html
